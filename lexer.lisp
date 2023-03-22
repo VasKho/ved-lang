@@ -1,0 +1,11 @@
+(in-package :ved)
+
+(define-lexer ved-lexer (state)
+  ("%("                                              (values :lparen $$))
+  ("%)"                                              (values :rparen $$))
+  ("\"([^\"\\]|\\\"|\\\[^\"])*\""                    (values :string $$))
+  ("(%-)?((0%.%d+)|[1-9]%d*%.%d+)"                   (values :float $$))
+  ("(%-)?(0|([1-9]%d*))"                             (values :integer $$))
+  ("(%a|%+|%-|%*|/|>|<|=)+(%a|%+|%-|%*|/|>|<|=|%d)*" (values :symbol $$))
+  (";[^%n]*"                                         :next-token)
+  ("%s|%t|%n|%r"                                     :next-token))
